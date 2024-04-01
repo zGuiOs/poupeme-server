@@ -13,4 +13,6 @@ type Transaction struct {
 	Description string
 	Date        time.Time
 	Amount      decimal.Decimal `gorm:"type:decimal(10,2)"`
+	Type        string `gorm:"type:enum('revenue', 'expense')"`
+	Category    string
 }

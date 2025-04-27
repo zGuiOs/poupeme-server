@@ -22,7 +22,7 @@ Este é o backend de uma aplicação de controle financeiro pessoal, desenvolvid
 
 ### Pré-requisitos
 - Go 1.24.2+
-- MySQL 5.7+
+- MySQL 8.0.41+
 - Git
 
 ### Configuração

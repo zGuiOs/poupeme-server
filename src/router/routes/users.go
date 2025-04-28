@@ -14,27 +14,15 @@ var usersRoutes = []Route{
 		NeedAuth: false,
 	},
 	{
-		URI:      "/users",
-		Method:   http.MethodGet,
-		Handler:  controllers.FetchUsers,
-		NeedAuth: false,
-	},
-	{
-		URI:      "/users/{userId}",
-		Method:   http.MethodGet,
-		Handler:  controllers.FetchUserById,
-		NeedAuth: false,
-	},
-	{
-		URI:      "/users/{userId}",
+		URI:      "/users/{UUID}",
 		Method:   http.MethodPut,
 		Handler:  controllers.UpdateUser,
-		NeedAuth: false,
+		NeedAuth: true,
 	},
 	{
-		URI:      "/users/{userId}",
+		URI:      "/users/{UUID}",
 		Method:   http.MethodDelete,
 		Handler:  controllers.DeleteUser,
-		NeedAuth: false,
+		NeedAuth: true,
 	},
 }

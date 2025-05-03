@@ -19,6 +19,7 @@ type Route struct {
 func Config(router *chi.Mux) *chi.Mux {
 	routes := usersRoutes
 	routes = append(routes, loginRoutes)
+	routes = append(routes, transactionsRoutes...)
 
 	for _, route := range routes {
 		if route.NeedAuth {

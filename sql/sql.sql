@@ -17,6 +17,8 @@ CREATE TABLE users (
     INDEX idx_users_email (email)
 ) ENGINE = INNODB;
 
+DROP TABLE IF EXISTS types;
+
 CREATE TABLE types (
     id int auto_increment primary key,
     name varchar(50) not null,
@@ -26,6 +28,14 @@ CREATE TABLE types (
     unique index idx_types_name_user_id (name, user_id)
 ) ENGINE = INNODB;
 
+INSERT INTO
+    types (name, user_id, created_at)
+VALUES
+    ('Receita', NULL, CURRENT_TIMESTAMP()),
+    ('Despesa', NULL, CURRENT_TIMESTAMP());
+
+DROP TABLE IF EXISTS categories;
+
 CREATE TABLE categories (
     id int auto_increment primary key,
     name varchar(50) not null,
@@ -34,6 +44,18 @@ CREATE TABLE categories (
     foreign key (user_id) references users (id),
     unique index idx_categories_name_user_id (name, user_id)
 ) ENGINE = INNODB;
+
+INSERT INTO
+    categories (name, user_id, created_at)
+VALUES
+    ('Alimentação', NULL, CURRENT_TIMESTAMP()),
+    ('Transporte', NULL, CURRENT_TIMESTAMP()),
+    ('Moradia', NULL, CURRENT_TIMESTAMP()),
+    ('Salário', NULL, CURRENT_TIMESTAMP()),
+    ('Lazer', NULL, CURRENT_TIMESTAMP()),
+    ('Saúde', NULL, CURRENT_TIMESTAMP());
+
+DROP TABLE IF EXISTS transactions;
 
 CREATE TABLE transactions (
     id int auto_increment primary key,

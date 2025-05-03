@@ -17,6 +17,7 @@ type User struct {
 	Name       string    `json:"name,omitempty"`
 	Email      string    `json:"email,omitempty"`
 	Password   string    `json:"password,omitempty"`
+	Status     string    `json:"status,omitempty"`
 	Created_at time.Time `json:"created_at"`
 	Updated_at time.Time `json:"updated_at"`
 }
@@ -54,6 +55,10 @@ func (user *User) validate(step string) error {
 
 	if step == "register" && user.Password == "" {
 		return errors.New("Senha não pode estar em branco")
+	}
+
+	if step != "register" && user.Status == "" {
+		return errors.New("O status não pode estar em branco")
 	}
 
 	return nil

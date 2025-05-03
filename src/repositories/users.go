@@ -2,6 +2,7 @@ package repositories
 
 import (
 	"database/sql"
+	"errors"
 
 	"github.com/zGuiOs/poupeme-server/src/models"
 )
@@ -29,6 +30,21 @@ func (repositorie users) Create(user models.User) error {
 	}
 
 	return nil
+}
+
+func (repositorie users) FetchByID(UUID string) (uint64, error) {
+	var id uint64
+
+	err := repositorie.db.QueryRow("SELECT id FROM users WHERE uuid = ?", UUID).Scan(&id)
+	if err == sql.ErrNoRows {
+		return 0, errors.New("Usuário não encontrado")
+	}
+
+	if err != nil {
+		return 0, err
+	}
+
+	return id, nil
 }
 
 // UpdateUser update an user in database

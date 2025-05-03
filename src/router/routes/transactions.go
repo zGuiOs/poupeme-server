@@ -13,4 +13,10 @@ var transactionsRoutes = []Route{
 		Handler:  controllers.CreateTransaction,
 		NeedAuth: true,
 	},
+	{
+		URI:      "/transactions/{UUID}",
+		Method:   http.MethodGet,
+		Handler:  controllers.FetchTransactions,
+		NeedAuth: true,
+	},
 }

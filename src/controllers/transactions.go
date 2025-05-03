@@ -72,7 +72,43 @@ func CreateTransaction(w http.ResponseWriter, r *http.Request) {
 }
 
 // FetchTransactions call the repo that will fetch all transactions
-func FetchTransactions(w http.ResponseWriter, r *http.Request) {}
+func FetchTransactions(w http.ResponseWriter, r *http.Request) {
+	params := chi.URLParam(r, "UUID")
+
+	userUUID, err := auth.ExtractUUID(r)
+	if err != nil {
+		responses.Erro(w, http.StatusUnauthorized, err)
+		return
+	}
+
+	if userUUID != params {
+		responses.Erro(w, http.StatusForbidden, errors.New("Não é possível consultar transacoes em um usuário diferente do seu"))
+		return
+	}
+
+	db, err := database.Connect()
+	if err != nil {
+		responses.Erro(w, http.StatusInternalServerError, err)
+		return
+	}
+	defer db.Close()
+
+	userRepository := repositories.NewUserRepository(db)
+	userID, err := userRepository.FetchByID(params)
+	if err != nil {
+		responses.Erro(w, http.StatusInternalServerError, err)
+		return
+	}
+
+	transactionRepository := repositories.NewTransactionRepository(db)
+	transactions, err := transactionRepository.FetchTransactions(userID)
+	if err != nil {
+		responses.Erro(w, http.StatusInternalServerError, err)
+		return
+	}
+
+	responses.JSON(w, http.StatusOK, transactions)
+}
 
 // FetchTransactions call the repo that will fetch one transaction
 func FetchTransactionByID(w http.ResponseWriter, r *http.Request) {}
